@@ -156,7 +156,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${basedir}/../ambari-web/public</directory>
+      <directory>${basedir}/../ambari-web/ui/public</directory>
       <outputDirectory>ambari-server-${project.version}/web</outputDirectory>
       <includes>
         <include>**</include>
