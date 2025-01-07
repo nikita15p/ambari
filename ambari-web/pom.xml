@@ -32,7 +32,8 @@
         <ambari.dir>${project.parent.parent.basedir}</ambari.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <nodemodules.dir>node_modules</nodemodules.dir> <!-- specify -Dnodemodules.dir option to reduce ambari-web build time by not re-downloading npm modules -->
-        <uidir>${basedir}/ui</uidir>
+        <uidir>${basedir}/src/main/resources/ui/classic</uidir>
+        <ui2dir>${basedir}/src/main/resources/ui/latest</ui2dir>
     </properties>
     <build>
         <plugins>
@@ -104,6 +105,41 @@
                             <arguments>install --ignore-engines --pure-lockfile</arguments>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>install-node-and-npm-react</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v20.11.0</nodeVersion>
+                            <npmVersion>10.8.3</npmVersion>
+                            <workingDirectory>${ui2dir}</workingDirectory>
+                            <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-install-react</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                        <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                        <arguments>install</arguments>
+                        <workingDirectory>${ui2dir}</workingDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-run-build-react</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                            <workingDirectory>${ui2dir}</workingDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -121,6 +157,23 @@
                             <executable>${executable.rmdir}</executable>
                             <workingDirectory>${uidir}</workingDirectory>
                             <commandlineArgs>${args.rm.clean} public ${nodemodules.dir}</commandlineArgs>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                                <successCode>2</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean-rmdir-ui2</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${executable.rmdir}</executable>
+                            <workingDirectory>${ui2dir}</workingDirectory>
+                            <commandlineArgs>${args.rm.clean} dist ${nodemodules.dir}</commandlineArgs>
                             <successCodes>
                                 <successCode>0</successCode>
                                 <successCode>1</successCode>
