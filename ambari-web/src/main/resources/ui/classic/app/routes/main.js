@@ -940,13 +940,5 @@ module.exports = Em.Route.extend(App.RouterRedirections, {
     router.transitionTo('main.services.service.summary', service);
   },
 
-  
-  /**
-   * Open react js of the ambari-web
-   * @param {object} event
-   * @method routeToLatestUI
-   */
-  routeToLatestUI: function (router, event) {
-    router.transitionTo('latest', event.context);
-  }
+
 });
