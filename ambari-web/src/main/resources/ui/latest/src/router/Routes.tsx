@@ -1,12 +1,12 @@
-import { Routes, Route } from "react-router-dom";
-import routes from "./RoutesList.js";
+import { Switch, Route } from "react-router-dom";
+import routes from "./RoutesList.tsx";
 
 export default function Routes() {
   return (
-    <Routes>
+    <Switch>
       {routes.map(({ path, Element }, key) => (
-        <Route path={path} key={key} element={<Element />}></Route>
+        <Route path={path} key={key} render={() => <Element />}></Route>
       ))}
-    </Routes>
+    </Switch>
   );
 }

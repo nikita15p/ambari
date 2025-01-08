@@ -4,6 +4,10 @@ export function setupCounter(element: HTMLButtonElement) {
     counter = count
     element.innerHTML = `count is ${counter}`
   }
-  element.addEventListener('click', () => setCounter(counter + 1))
-  setCounter(0)
+  if (element) {
+    element.addEventListener('click', () => setCounter(counter + 1))
+    setCounter(0)
+  } else {
+    console.error('Element is null');
+  }
 }
