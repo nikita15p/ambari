@@ -149,9 +149,15 @@ App.ApplicationController = Em.Controller.extend(App.Persist, {
     });    
   },
 
-  switchExperience: function() {
+  switchExperience: function switchExperience() {
     console.log('Switching to latest experience');
-    App.router.transitionTo('latest');
+
+  
+    currentLocation = this.getCurrentLocationUrl();
+    newLocation = string_utils.replace(currentLocation,'classic', 'latest');
+    this.setLocationURL(newLocation);
+
+    console.log('newLocation');
   }
 
 });

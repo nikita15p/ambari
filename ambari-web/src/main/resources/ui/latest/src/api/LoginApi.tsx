@@ -9,12 +9,13 @@ function encodeCredentials(username: any, password: any) {
   }
 
 export const LoginApi = {
+
     login: () => {
         const encodedCredentials = encodeCredentials("admin", "admin");
         const headers = {   
             "Authorization": `Basic ${encodedCredentials}`,
             'Content-Type': 'text/plain',
         }
-        webApi.post("/login", {}, { headers });
+        webApi.post("/auth", {}, { headers });
 }
 }
