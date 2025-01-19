@@ -27,18 +27,16 @@
     <!-- <button onclick="loadReact()">Switch to React</button>
     <button onclick="loadEmber()">Switch to Ember</button> -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function loadReact() {
-                console.log('Loading React latest');
-                window.location.href = 'latest/';
-            }
-            function loadEmber() {
-                console.log('Loading Ember classic');
-                window.location.href = 'classic/';
-            }
-            
-            loadReact();
-        });
+        function loadReact() {
+            console.log('Loading React latest');
+            window.location.href = 'latest/';
+        }
+        function loadEmber() {
+            console.log('Loading Ember classic');
+            window.location.href = 'classic/';
+        }
+        
+        loadReact();
     </script>
 </body>
 </html>
