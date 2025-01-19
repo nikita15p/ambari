@@ -478,8 +478,8 @@
                                 <configuration>
                                     <!-- Copy stack specific UI resources -->
                                     <executable>${executable.shell}</executable>
-                                    <workingDirectory>${uidir}</workingDirectory>
-                                    <commandlineArgs>${args.shell} ${uidir}${dirsep}copy-pluggable-stack-resources.${fileextension.shell} ${stack.distribution}</commandlineArgs>
+                                    <workingDirectory>${basedir}</workingDirectory>
+                                    <commandlineArgs>${args.shell} ${basedir}${dirsep}copy-pluggable-stack-resources.${fileextension.shell} ${stack.distribution}</commandlineArgs>
                                 </configuration>
                             </execution>
                         </executions>
