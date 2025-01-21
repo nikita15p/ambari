@@ -41,6 +41,9 @@
   <fileSets>
     <fileSet>
       <directory>${ambari-web-dir}</directory>
+      <includes>
+        <include>**/*</include>
+      </includes>
       <outputDirectory>/usr/lib/ambari-server/web</outputDirectory>
     </fileSet>
     <fileSet>

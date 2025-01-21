@@ -194,6 +194,18 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>clean-mkdir2</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${executable.mkdir}</executable>
+                            <workingDirectory>${ui2dir}</workingDirectory>
+                            <commandlineArgs>${args.mkdir} dist</commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Brunch build</id>
                         <phase>generate-resources</phase>
                         <goals>

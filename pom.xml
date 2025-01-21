@@ -333,7 +333,7 @@
             <exclude>ambari-common/src/main/python/ambari_ws4py/**</exclude>
 
             <exclude>ambari-web/src/main/resources/ui/classic/node_modules/**</exclude>
-
+            <exclude>ambari-web/src/main/resources/ui/latest/node_modules/**</exclude>
             <!--Contributions-->
             <exclude>contrib/**/bower_components/**</exclude>
             <exclude>contrib/**/dist/**</exclude>
