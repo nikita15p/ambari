@@ -8934,10 +8934,10 @@
             "$ref" : "#/definitions/AlertNoticeEntity"
           }
         },
-        "enabled" : {
+        "global" : {
           "type" : "boolean"
         },
-        "global" : {
+        "enabled" : {
           "type" : "boolean"
         }
       }
@@ -9072,15 +9072,15 @@
     "BatchRequestRequest" : {
       "type" : "object",
       "properties" : {
-        "order_id" : {
-          "type" : "integer",
-          "format" : "int64"
+        "uri" : {
+          "type" : "string"
         },
         "RequestBodyInfo" : {
           "$ref" : "#/definitions/RequestBodyInfo"
         },
-        "uri" : {
-          "type" : "string"
+        "order_id" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "type" : {
           "type" : "string"
@@ -9090,6 +9090,15 @@
     "BatchRequestResponse" : {
       "type" : "object",
       "properties" : {
+        "request_uri" : {
+          "type" : "string"
+        },
+        "request_status" : {
+          "type" : "string"
+        },
+        "request_body" : {
+          "type" : "string"
+        },
         "order_id" : {
           "type" : "integer",
           "format" : "int64"
@@ -9099,15 +9108,6 @@
           "format" : "int32"
         },
         "response_message" : {
-          "type" : "string"
-        },
-        "request_status" : {
-          "type" : "string"
-        },
-        "request_body" : {
-          "type" : "string"
-        },
-        "request_uri" : {
           "type" : "string"
         },
         "request_type" : {
@@ -9139,11 +9139,11 @@
         "pauseAfterFirstBatch" : {
           "type" : "boolean"
         },
-        "taskFailureToleranceLimit" : {
+        "taskFailureToleranceLimitPerBatch" : {
           "type" : "integer",
           "format" : "int32"
         },
-        "taskFailureToleranceLimitPerBatch" : {
+        "taskFailureToleranceLimit" : {
           "type" : "integer",
           "format" : "int32"
         }
@@ -9152,14 +9152,14 @@
     "BlueprintInfo" : {
       "type" : "object",
       "properties" : {
+        "security" : {
+          "$ref" : "#/definitions/SecurityInfo"
+        },
         "stack_version" : {
           "type" : "string"
         },
         "stack_name" : {
           "type" : "string"
-        },
-        "security" : {
-          "$ref" : "#/definitions/SecurityInfo"
         },
         "blueprint_name" : {
           "type" : "string"
@@ -9169,14 +9169,14 @@
     "BlueprintSwagger" : {
       "type" : "object",
       "properties" : {
+        "Blueprints" : {
+          "$ref" : "#/definitions/BlueprintInfo"
+        },
         "host_groups" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/HostGroupInfo"
           }
-        },
-        "Blueprints" : {
-          "$ref" : "#/definitions/BlueprintInfo"
         },
         "configurations" : {
           "type" : "array",
@@ -9214,8 +9214,11 @@
     "Cluster" : {
       "type" : "object",
       "properties" : {
-        "desiredStackVersion" : {
-          "$ref" : "#/definitions/StackId"
+        "configGroups" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/ConfigGroup"
+          }
         },
         "serviceConfigVersions" : {
           "type" : "array",
@@ -9223,28 +9226,18 @@
             "$ref" : "#/definitions/ServiceConfigVersionResponse"
           }
         },
-        "configGroups" : {
-          "type" : "object",
-          "additionalProperties" : {
-            "$ref" : "#/definitions/ConfigGroup"
-          }
-        },
         "clusterName" : {
           "type" : "string"
-        },
-        "clusterEntity" : {
-          "$ref" : "#/definitions/ClusterEntity"
         },
         "resourceId" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "hostNames" : {
-          "type" : "array",
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "string"
-          }
+        "clusterEntity" : {
+          "$ref" : "#/definitions/ClusterEntity"
+        },
+        "roleCommandOrder" : {
+          "$ref" : "#/definitions/RoleCommandOrder"
         },
         "services" : {
           "type" : "object",
@@ -9258,20 +9251,37 @@
             "$ref" : "#/definitions/Host"
           }
         },
-        "currentStackVersion" : {
-          "$ref" : "#/definitions/StackId"
+        "bluePrintDeployed" : {
+          "type" : "boolean"
         },
-        "provisioningState" : {
-          "type" : "string",
-          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
+        "upgradeInProgress" : {
+          "$ref" : "#/definitions/UpgradeEntity"
         },
-        "activeServiceConfigVersions" : {
+        "upgradeSuspended" : {
+          "type" : "boolean"
+        },
+        "clusterSize" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "componentVersionMap" : {
           "type" : "object",
           "additionalProperties" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/ServiceConfigVersionResponse"
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
             }
+          }
+        },
+        "clusterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "hostNames" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string"
           }
         },
         "securityType" : {
@@ -9290,13 +9300,23 @@
             "$ref" : "#/definitions/ServiceComponentHost"
           }
         },
-        "roleCommandOrder" : {
-          "$ref" : "#/definitions/RoleCommandOrder"
+        "desiredStackVersion" : {
+          "$ref" : "#/definitions/StackId"
         },
-        "desiredConfigs" : {
+        "currentStackVersion" : {
+          "$ref" : "#/definitions/StackId"
+        },
+        "provisioningState" : {
+          "type" : "string",
+          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
+        },
+        "activeServiceConfigVersions" : {
           "type" : "object",
           "additionalProperties" : {
-            "$ref" : "#/definitions/DesiredConfig"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ServiceConfigVersionResponse"
+            }
           }
         },
         "allDesiredConfigVersions" : {
@@ -9330,31 +9350,11 @@
             "type" : "object"
           }
         },
-        "bluePrintDeployed" : {
-          "type" : "boolean"
-        },
-        "upgradeInProgress" : {
-          "$ref" : "#/definitions/UpgradeEntity"
-        },
-        "upgradeSuspended" : {
-          "type" : "boolean"
-        },
-        "clusterSize" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "componentVersionMap" : {
+        "desiredConfigs" : {
           "type" : "object",
           "additionalProperties" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string"
-            }
+            "$ref" : "#/definitions/DesiredConfig"
           }
-        },
-        "clusterId" : {
-          "type" : "integer",
-          "format" : "int64"
         }
       }
     },
@@ -9728,10 +9728,10 @@
     "ClusterServiceArtifactResponseInfo" : {
       "type" : "object",
       "properties" : {
-        "service_name" : {
+        "cluster_name" : {
           "type" : "string"
         },
-        "cluster_name" : {
+        "service_name" : {
           "type" : "string"
         },
         "artifact_name" : {
@@ -9802,13 +9802,19 @@
         "service_name" : {
           "type" : "string"
         },
-        "component_name" : {
-          "type" : "string"
-        },
         "scope" : {
           "type" : "string"
         },
+        "component_name" : {
+          "type" : "string"
+        },
         "stack_name" : {
+          "type" : "string"
+        },
+        "dependent_component_name" : {
+          "type" : "string"
+        },
+        "dependent_service_name" : {
           "type" : "string"
         },
         "conditions" : {
@@ -9816,12 +9822,6 @@
           "items" : {
             "$ref" : "#/definitions/DependencyConditionInfo"
           }
-        },
-        "dependent_component_name" : {
-          "type" : "string"
-        },
-        "dependent_service_name" : {
-          "type" : "string"
         }
       }
     },
@@ -9854,6 +9854,9 @@
     "Config" : {
       "type" : "object",
       "properties" : {
+        "cluster" : {
+          "$ref" : "#/definitions/Cluster"
+        },
         "serviceConfigVersions" : {
           "type" : "array",
           "items" : {
@@ -9861,8 +9864,14 @@
             "format" : "int64"
           }
         },
-        "cluster" : {
-          "$ref" : "#/definitions/Cluster"
+        "propertiesAttributes" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
         },
         "propertiesTypes" : {
           "type" : "object",
@@ -9870,15 +9879,6 @@
             "type" : "array",
             "uniqueItems" : true,
             "items" : {
-              "type" : "string"
-            }
-          }
-        },
-        "propertiesAttributes" : {
-          "type" : "object",
-          "additionalProperties" : {
-            "type" : "object",
-            "additionalProperties" : {
               "type" : "string"
             }
           }
@@ -9938,10 +9938,10 @@
     "ConfigGroup" : {
       "type" : "object",
       "properties" : {
-        "serviceName" : {
+        "clusterName" : {
           "type" : "string"
         },
-        "clusterName" : {
+        "serviceName" : {
           "type" : "string"
         },
         "tag" : {
@@ -10204,9 +10204,6 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "tag" : {
-          "type" : "string"
-        },
         "properties_attributes" : {
           "type" : "object",
           "additionalProperties" : {
@@ -10215,6 +10212,9 @@
               "type" : "string"
             }
           }
+        },
+        "tag" : {
+          "type" : "string"
         },
         "properties" : {
           "type" : "object",
@@ -10516,22 +10516,6 @@
     "Host" : {
       "type" : "object",
       "properties" : {
-        "state" : {
-          "type" : "string",
-          "enum" : [ "INIT", "WAITING_FOR_HOST_STATUS_UPDATES", "HEALTHY", "HEARTBEAT_LOST", "UNHEALTHY" ]
-        },
-        "status" : {
-          "type" : "string"
-        },
-        "prefix" : {
-          "type" : "string"
-        },
-        "osFamily" : {
-          "type" : "string"
-        },
-        "publicHostName" : {
-          "type" : "string"
-        },
         "hostEntity" : {
           "$ref" : "#/definitions/HostEntity"
         },
@@ -10539,18 +10523,22 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "osType" : {
-          "type" : "string"
-        },
-        "ipv6" : {
-          "type" : "string"
-        },
-        "ipv4" : {
-          "type" : "string"
-        },
-        "currentPingPort" : {
+        "lastHeartbeatTime" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int64"
+        },
+        "state" : {
+          "type" : "string",
+          "enum" : [ "INIT", "WAITING_FOR_HOST_STATUS_UPDATES", "HEALTHY", "HEARTBEAT_LOST", "UNHEALTHY" ]
+        },
+        "prefix" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "osFamily" : {
+          "type" : "string"
         },
         "cpuCount" : {
           "type" : "integer",
@@ -10560,19 +10548,15 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "totalMemBytes" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "availableMemBytes" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
         "osArch" : {
           "type" : "string"
         },
-        "osInfo" : {
+        "osType" : {
           "type" : "string"
+        },
+        "totalMemBytes" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "disksInfo" : {
           "type" : "array",
@@ -10580,11 +10564,9 @@
             "$ref" : "#/definitions/DiskInfo"
           }
         },
-        "healthStatus" : {
-          "$ref" : "#/definitions/HostHealthStatus"
-        },
-        "recoveryReport" : {
-          "$ref" : "#/definitions/RecoveryReport"
+        "lastRegistrationTime" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "hostAttributes" : {
           "type" : "object",
@@ -10592,26 +10574,27 @@
             "type" : "string"
           }
         },
+        "agentVersion" : {
+          "$ref" : "#/definitions/AgentVersion"
+        },
         "rackInfo" : {
           "type" : "string"
         },
-        "lastRegistrationTime" : {
-          "type" : "integer",
-          "format" : "int64"
+        "publicHostName" : {
+          "type" : "string"
         },
-        "lastAgentStartTime" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "lastHeartbeatTime" : {
-          "type" : "integer",
-          "format" : "int64"
+        "healthStatus" : {
+          "$ref" : "#/definitions/HostHealthStatus"
         },
         "lastAgentEnv" : {
           "$ref" : "#/definitions/AgentEnv"
         },
-        "agentVersion" : {
-          "$ref" : "#/definitions/AgentVersion"
+        "recoveryReport" : {
+          "$ref" : "#/definitions/RecoveryReport"
+        },
+        "lastAgentStartTime" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "timeInState" : {
           "type" : "integer",
@@ -10623,6 +10606,23 @@
             "$ref" : "#/definitions/HostVersionEntity"
           }
         },
+        "ipv6" : {
+          "type" : "string"
+        },
+        "ipv4" : {
+          "type" : "string"
+        },
+        "currentPingPort" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "availableMemBytes" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "osInfo" : {
+          "type" : "string"
+        },
         "hostName" : {
           "type" : "string"
         }
@@ -10631,11 +10631,11 @@
     "HostComponentComponent" : {
       "type" : "object",
       "properties" : {
-        "ServiceComponentInfo" : {
-          "$ref" : "#/definitions/HostComponentServiceComponentInfo"
-        },
         "href" : {
           "type" : "string"
+        },
+        "ServiceComponentInfo" : {
+          "$ref" : "#/definitions/HostComponentServiceComponentInfo"
         }
       }
     },
@@ -10724,10 +10724,10 @@
     "HostComponentServiceComponentInfo" : {
       "type" : "object",
       "properties" : {
-        "service_name" : {
+        "cluster_name" : {
           "type" : "string"
         },
-        "cluster_name" : {
+        "service_name" : {
           "type" : "string"
         },
         "component_name" : {
@@ -10927,12 +10927,12 @@
             "$ref" : "#/definitions/ComponentInfo"
           }
         },
+        "name" : {
+          "type" : "string"
+        },
         "cardinality" : {
           "type" : "integer",
           "format" : "int32"
-        },
-        "name" : {
-          "type" : "string"
         }
       }
     },
@@ -11005,10 +11005,10 @@
         "public_host_name" : {
           "type" : "string"
         },
-        "host_group" : {
+        "blueprint" : {
           "type" : "string"
         },
-        "blueprint" : {
+        "host_group" : {
           "type" : "string"
         }
       }
@@ -11359,10 +11359,10 @@
     "LiveService" : {
       "type" : "object",
       "properties" : {
-        "status" : {
+        "desc" : {
           "type" : "string"
         },
-        "desc" : {
+        "status" : {
           "type" : "string"
         },
         "name" : {
@@ -11867,13 +11867,13 @@
             "enum" : [ "GPL" ]
           }
         },
+        "baseUrl" : {
+          "type" : "string"
+        },
         "mirrorsList" : {
           "type" : "string"
         },
         "repoId" : {
-          "type" : "string"
-        },
-        "baseUrl" : {
           "type" : "string"
         },
         "repoName" : {
@@ -12013,15 +12013,15 @@
         "stackId" : {
           "type" : "string"
         },
+        "repositoryType" : {
+          "type" : "string",
+          "enum" : [ "STANDARD", "PATCH", "MAINT", "SERVICE" ]
+        },
         "version" : {
           "type" : "string"
         },
         "stackName" : {
           "type" : "string"
-        },
-        "repositoryType" : {
-          "type" : "string",
-          "enum" : [ "STANDARD", "PATCH", "MAINT", "SERVICE" ]
         },
         "id" : {
           "type" : "integer",
@@ -12088,15 +12088,15 @@
         "stackName" : {
           "type" : "string"
         },
-        "legacy" : {
-          "type" : "boolean"
-        },
         "repositoryXml" : {
           "$ref" : "#/definitions/VersionDefinitionXml"
         },
         "parentId" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "legacy" : {
+          "type" : "boolean"
         }
       }
     },
@@ -12249,26 +12249,10 @@
     "RequestExecution" : {
       "type" : "object",
       "properties" : {
-        "batch" : {
-          "$ref" : "#/definitions/Batch"
-        },
         "clusterName" : {
           "type" : "string"
         },
-        "createUser" : {
-          "type" : "string"
-        },
-        "updateUser" : {
-          "type" : "string"
-        },
         "updateTime" : {
-          "type" : "string"
-        },
-        "authenticatedUserId" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastExecutionStatus" : {
           "type" : "string"
         },
         "status" : {
@@ -12277,11 +12261,27 @@
         "description" : {
           "type" : "string"
         },
+        "schedule" : {
+          "$ref" : "#/definitions/Schedule"
+        },
         "createTime" : {
           "type" : "string"
         },
-        "schedule" : {
-          "$ref" : "#/definitions/Schedule"
+        "batch" : {
+          "$ref" : "#/definitions/Batch"
+        },
+        "updateUser" : {
+          "type" : "string"
+        },
+        "authenticatedUserId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createUser" : {
+          "type" : "string"
+        },
+        "lastExecutionStatus" : {
+          "type" : "string"
         },
         "id" : {
           "type" : "integer",
@@ -12393,17 +12393,17 @@
     "RequestResourceFilter" : {
       "type" : "object",
       "properties" : {
-        "service_name" : {
+        "serviceName" : {
           "type" : "string"
         },
-        "component_name" : {
+        "componentName" : {
           "type" : "string"
         },
-        "hosts_predicate" : {
-          "type" : "string"
-        },
-        "hosts" : {
-          "type" : "string"
+        "hostNames" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
         }
       }
     },
@@ -12583,14 +12583,14 @@
     "RequestScheduleRequestElement" : {
       "type" : "object",
       "properties" : {
+        "schedule" : {
+          "$ref" : "#/definitions/ScheduleRequest"
+        },
         "batch" : {
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/BatchRequest"
           }
-        },
-        "schedule" : {
-          "$ref" : "#/definitions/ScheduleRequest"
         }
       }
     },
@@ -12605,26 +12605,10 @@
     "RequestScheduleResponseElement" : {
       "type" : "object",
       "properties" : {
-        "batch" : {
-          "$ref" : "#/definitions/BatchResponse"
-        },
         "cluster_name" : {
           "type" : "string"
         },
-        "create_user" : {
-          "type" : "string"
-        },
-        "update_user" : {
-          "type" : "string"
-        },
         "update_time" : {
-          "type" : "string"
-        },
-        "authenticated_user" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "last_execution_status" : {
           "type" : "string"
         },
         "description" : {
@@ -12633,11 +12617,27 @@
         "status" : {
           "type" : "string"
         },
+        "schedule" : {
+          "$ref" : "#/definitions/ScheduleResponse"
+        },
         "create_time" : {
           "type" : "string"
         },
-        "schedule" : {
-          "$ref" : "#/definitions/ScheduleResponse"
+        "batch" : {
+          "$ref" : "#/definitions/BatchResponse"
+        },
+        "update_user" : {
+          "type" : "string"
+        },
+        "authenticated_user" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "create_user" : {
+          "type" : "string"
+        },
+        "last_execution_status" : {
+          "type" : "string"
         },
         "id" : {
           "type" : "integer",
@@ -12662,20 +12662,19 @@
         "cluster_name" : {
           "type" : "string"
         },
+        "inputs" : {
+          "type" : "string"
+        },
         "end_time" : {
           "type" : "string"
         },
-        "operation_level" : {
-          "type" : "string"
+        "failed_task_count" : {
+          "type" : "integer",
+          "format" : "int32"
         },
-        "resource_filters" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/RequestResourceFilter"
-          }
-        },
-        "exclusive" : {
-          "type" : "boolean"
+        "progress_percent" : {
+          "type" : "number",
+          "format" : "double"
         },
         "task_count" : {
           "type" : "integer",
@@ -12693,27 +12692,24 @@
         "request_context" : {
           "type" : "string"
         },
+        "id" : {
+          "type" : "string"
+        },
         "create_time" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "inputs" : {
+        "resource_filters" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/RequestResourceFilter"
+          }
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        },
+        "operation_level" : {
           "type" : "string"
-        },
-        "id" : {
-          "type" : "string"
-        },
-        "aborted_task_count" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "failed_task_count" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "progress_percent" : {
-          "type" : "number",
-          "format" : "double"
         },
         "queued_task_count" : {
           "type" : "integer",
@@ -12722,6 +12718,10 @@
         "request_schedule_id" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "aborted_task_count" : {
+          "type" : "integer",
+          "format" : "int32"
         },
         "type" : {
           "type" : "string"
@@ -13024,10 +13024,10 @@
     "ScheduleRequest" : {
       "type" : "object",
       "properties" : {
-        "days_of_month" : {
+        "endTime" : {
           "type" : "string"
         },
-        "endTime" : {
+        "day_of_week" : {
           "type" : "string"
         },
         "year" : {
@@ -13042,10 +13042,10 @@
         "minutes" : {
           "type" : "string"
         },
-        "day_of_week" : {
+        "startTime" : {
           "type" : "string"
         },
-        "startTime" : {
+        "days_of_month" : {
           "type" : "string"
         }
       }
@@ -13053,10 +13053,10 @@
     "ScheduleResponse" : {
       "type" : "object",
       "properties" : {
-        "days_of_month" : {
+        "end_time" : {
           "type" : "string"
         },
-        "end_time" : {
+        "day_of_week" : {
           "type" : "string"
         },
         "year" : {
@@ -13071,10 +13071,10 @@
         "minutes" : {
           "type" : "string"
         },
-        "day_of_week" : {
+        "start_time" : {
           "type" : "string"
         },
-        "start_time" : {
+        "days_of_month" : {
           "type" : "string"
         }
       }
@@ -13126,12 +13126,12 @@
             "type" : "object"
           }
         },
-        "kerberos_descriptor_reference" : {
-          "type" : "string"
-        },
         "security_type" : {
           "type" : "string",
           "enum" : [ "NONE", "KERBEROS" ]
+        },
+        "kerberos_descriptor_reference" : {
+          "type" : "string"
         }
       }
     },
@@ -13150,22 +13150,26 @@
         "desiredRepositoryVersion" : {
           "$ref" : "#/definitions/RepositoryVersionEntity"
         },
-        "desiredState" : {
-          "type" : "string",
-          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
-        },
-        "maintenanceState" : {
-          "type" : "string",
-          "enum" : [ "OFF", "ON", "IMPLIED_FROM_SERVICE", "IMPLIED_FROM_HOST", "IMPLIED_FROM_SERVICE_AND_HOST" ]
+        "desiredStackId" : {
+          "$ref" : "#/definitions/StackId"
         },
         "credentialStoreEnabled" : {
           "type" : "boolean"
         },
-        "credentialStoreRequired" : {
-          "type" : "boolean"
+        "clusterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "desiredState" : {
+          "type" : "string",
+          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
         },
         "kerberosEnabled" : {
           "type" : "boolean"
+        },
+        "maintenanceState" : {
+          "type" : "string",
+          "enum" : [ "OFF", "ON", "IMPLIED_FROM_SERVICE", "IMPLIED_FROM_HOST", "IMPLIED_FROM_SERVICE_AND_HOST" ]
         },
         "serviceHosts" : {
           "type" : "array",
@@ -13178,18 +13182,14 @@
           "type" : "string",
           "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
         },
-        "credentialStoreSupported" : {
-          "type" : "boolean"
-        },
         "clientOnlyService" : {
           "type" : "boolean"
         },
-        "clusterId" : {
-          "type" : "integer",
-          "format" : "int64"
+        "credentialStoreSupported" : {
+          "type" : "boolean"
         },
-        "desiredStackId" : {
-          "$ref" : "#/definitions/StackId"
+        "credentialStoreRequired" : {
+          "type" : "boolean"
         },
         "name" : {
           "type" : "string"
@@ -13202,18 +13202,20 @@
     "ServiceComponent" : {
       "type" : "object",
       "properties" : {
-        "serviceName" : {
+        "clusterName" : {
           "type" : "string"
         },
-        "clusterName" : {
+        "serviceName" : {
           "type" : "string"
         },
         "desiredRepositoryVersion" : {
           "$ref" : "#/definitions/RepositoryVersionEntity"
         },
-        "desiredState" : {
-          "type" : "string",
-          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
+        "versionAdvertised" : {
+          "type" : "boolean"
+        },
+        "desiredVersion" : {
+          "type" : "string"
         },
         "serviceComponentsHosts" : {
           "type" : "array",
@@ -13222,18 +13224,19 @@
             "type" : "string"
           }
         },
-        "clientComponent" : {
-          "type" : "boolean"
-        },
-        "repositoryState" : {
-          "type" : "string",
-          "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
-        },
-        "recoveryEnabled" : {
-          "type" : "boolean"
-        },
         "masterComponent" : {
           "type" : "boolean"
+        },
+        "desiredStackId" : {
+          "$ref" : "#/definitions/StackId"
+        },
+        "clusterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "desiredState" : {
+          "type" : "string",
+          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
         },
         "serviceComponentHosts" : {
           "type" : "object",
@@ -13241,18 +13244,15 @@
             "$ref" : "#/definitions/ServiceComponentHost"
           }
         },
-        "versionAdvertised" : {
+        "repositoryState" : {
+          "type" : "string",
+          "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
+        },
+        "clientComponent" : {
           "type" : "boolean"
         },
-        "clusterId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "desiredVersion" : {
-          "type" : "string"
-        },
-        "desiredStackId" : {
-          "$ref" : "#/definitions/StackId"
+        "recoveryEnabled" : {
+          "type" : "boolean"
         },
         "name" : {
           "type" : "string"
@@ -13304,6 +13304,13 @@
             "$ref" : "#/definitions/HostComponentDesiredStateEntity"
           }
         },
+        "desiredVersion" : {
+          "type" : "string"
+        },
+        "repositoryState" : {
+          "type" : "string",
+          "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
+        },
         "versions" : {
           "type" : "array",
           "items" : {
@@ -13312,13 +13319,6 @@
         },
         "desiredStack" : {
           "$ref" : "#/definitions/StackEntity"
-        },
-        "repositoryState" : {
-          "type" : "string",
-          "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
-        },
-        "desiredVersion" : {
-          "type" : "string"
         }
       }
     },
@@ -13337,29 +13337,11 @@
             }
           }
         },
-        "serviceName" : {
-          "type" : "string"
-        },
         "clusterName" : {
           "type" : "string"
         },
-        "desiredState" : {
-          "type" : "string",
-          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
-        },
-        "actualConfigs" : {
-          "type" : "object",
-          "additionalProperties" : {
-            "$ref" : "#/definitions/HostConfig"
-          }
-        },
-        "maintenanceState" : {
-          "type" : "string",
-          "enum" : [ "OFF", "ON", "IMPLIED_FROM_SERVICE", "IMPLIED_FROM_HOST", "IMPLIED_FROM_SERVICE_AND_HOST" ]
-        },
-        "upgradeState" : {
-          "type" : "string",
-          "enum" : [ "NONE", "COMPLETE", "IN_PROGRESS", "FAILED", "VERSION_MISMATCH" ]
+        "serviceName" : {
+          "type" : "string"
         },
         "state" : {
           "type" : "string",
@@ -13368,22 +13350,47 @@
         "version" : {
           "type" : "string"
         },
-        "hostState" : {
+        "desiredStackId" : {
+          "$ref" : "#/definitions/StackId"
+        },
+        "clusterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "desiredState" : {
           "type" : "string",
-          "enum" : [ "INIT", "WAITING_FOR_HOST_STATUS_UPDATES", "HEALTHY", "HEARTBEAT_LOST", "UNHEALTHY" ]
-        },
-        "serviceComponentName" : {
-          "type" : "string"
-        },
-        "clientComponent" : {
-          "type" : "boolean"
+          "enum" : [ "INIT", "INSTALLING", "INSTALL_FAILED", "INSTALLED", "STARTING", "STARTED", "STOPPING", "UNINSTALLING", "UNINSTALLED", "WIPING_OUT", "UPGRADING", "DISABLED", "UNKNOWN" ]
         },
         "publicHostName" : {
           "type" : "string"
         },
+        "hostState" : {
+          "type" : "string",
+          "enum" : [ "INIT", "WAITING_FOR_HOST_STATUS_UPDATES", "HEALTHY", "HEARTBEAT_LOST", "UNHEALTHY" ]
+        },
+        "maintenanceState" : {
+          "type" : "string",
+          "enum" : [ "OFF", "ON", "IMPLIED_FROM_SERVICE", "IMPLIED_FROM_HOST", "IMPLIED_FROM_SERVICE_AND_HOST" ]
+        },
+        "clientComponent" : {
+          "type" : "boolean"
+        },
+        "upgradeState" : {
+          "type" : "string",
+          "enum" : [ "NONE", "COMPLETE", "IN_PROGRESS", "FAILED", "VERSION_MISMATCH" ]
+        },
         "componentAdminState" : {
           "type" : "string",
           "enum" : [ "INSERVICE", "DECOMMISSIONED", "DECOMMISSIONING" ]
+        },
+        "actualConfigs" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/HostConfig"
+          }
+        },
+        "serviceComponentName" : {
+          "type" : "string"
         },
         "restartRequired" : {
           "type" : "boolean"
@@ -13393,13 +13400,6 @@
         },
         "recoveryEnabled" : {
           "type" : "boolean"
-        },
-        "clusterId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "desiredStackId" : {
-          "$ref" : "#/definitions/StackId"
         },
         "host" : {
           "$ref" : "#/definitions/Host"
@@ -13475,12 +13475,12 @@
         "repositoryVersion" : {
           "$ref" : "#/definitions/RepositoryVersionEntity"
         },
+        "serviceComponentDesiredState" : {
+          "$ref" : "#/definitions/ServiceComponentDesiredStateEntity"
+        },
         "state" : {
           "type" : "string",
           "enum" : [ "NOT_REQUIRED", "INSTALLING", "INSTALLED", "INSTALL_FAILED", "OUT_OF_SYNC", "CURRENT" ]
-        },
-        "serviceComponentDesiredState" : {
-          "$ref" : "#/definitions/ServiceComponentDesiredStateEntity"
         },
         "id" : {
           "type" : "integer",
@@ -14060,16 +14060,16 @@
         "is_master" : {
           "type" : "boolean"
         },
-        "decommission_allowed" : {
-          "type" : "boolean"
-        },
-        "reassign_allowed" : {
+        "is_client" : {
           "type" : "boolean"
         },
         "bulk_commands_master_component_namen" : {
           "type" : "string"
         },
-        "is_client" : {
+        "decommission_allowed" : {
+          "type" : "boolean"
+        },
+        "reassign_allowed" : {
           "type" : "boolean"
         }
       }
@@ -14762,10 +14762,6 @@
             "$ref" : "#/definitions/UpgradeHistoryEntity"
           }
         },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
         "upgradeGroups" : {
           "type" : "array",
           "items" : {
@@ -14780,6 +14776,10 @@
         },
         "serviceCheckFailureAutoSkipped" : {
           "type" : "boolean"
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
         }
       }
     },
@@ -14827,11 +14827,11 @@
         "targetRepositoryVersion" : {
           "$ref" : "#/definitions/RepositoryVersionEntity"
         },
-        "targetVersion" : {
-          "type" : "string"
-        },
         "fromReposistoryVersion" : {
           "$ref" : "#/definitions/RepositoryVersionEntity"
+        },
+        "targetVersion" : {
+          "type" : "string"
         }
       }
     },
@@ -14852,15 +14852,15 @@
           "type" : "integer",
           "format" : "int64"
         },
+        "groupEntity" : {
+          "$ref" : "#/definitions/UpgradeGroupEntity"
+        },
         "text" : {
           "type" : "string"
         },
         "id" : {
           "type" : "integer",
           "format" : "int64"
-        },
-        "groupEntity" : {
-          "$ref" : "#/definitions/UpgradeGroupEntity"
         }
       }
     },
@@ -15066,11 +15066,11 @@
         "user_name" : {
           "type" : "string"
         },
-        "local_user_name" : {
-          "type" : "string"
-        },
         "ldap_user" : {
           "type" : "boolean"
+        },
+        "local_user_name" : {
+          "type" : "string"
         },
         "admin" : {
           "type" : "boolean"
@@ -15409,10 +15409,10 @@
         "view_instance_name" : {
           "type" : "string"
         },
-        "view_instance_version" : {
+        "view_instance_common_name" : {
           "type" : "string"
         },
-        "view_instance_common_name" : {
+        "view_instance_version" : {
           "type" : "string"
         },
         "url_suffix" : {

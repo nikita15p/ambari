@@ -151,12 +151,8 @@ App.ApplicationController = Em.Controller.extend(App.Persist, {
 
   switchExperience: function switchExperience() {
     console.log('Switching to latest experience');
-
-  
-    currentLocation = this.getCurrentLocationUrl();
-    newLocation = string_utils.replace(currentLocation,'classic', 'latest');
-    this.setLocationURL(newLocation);
-
+    var currentLocation = $window.location.href;
+    $window.location.href = currentLocation.replace("classic", "latest");
     console.log('newLocation');
   }
 
