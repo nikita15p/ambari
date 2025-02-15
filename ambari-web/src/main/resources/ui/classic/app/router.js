@@ -136,6 +136,8 @@ App.Router = Em.Router.extend({
   enableLogging: true,
   isFwdNavigation: true,
   backBtnForHigherStep: false,
+    // Add base URL configuration
+    rootURL: '/classic',
 
   /**
    * Checks if Back button is clicked
@@ -802,7 +804,7 @@ App.Router = Em.Router.extend({
       // If the preferred path is relative, allow a redirect to it.
       // If the path is not relative, silently ignore it - if the path is an absolute URL, the user
       // may be routed to a different server where the possibility exists for a phishing attack.
-      if ((preferredPath.startsWith('/') || preferredPath.startsWith('#')) && !preferredPath.contains('#/login')) {
+      if ((preferredPath.startsWith('/classic') || preferredPath.startsWith('#')) && !preferredPath.contains('#/login')) {
         window.location = preferredPath;
         isRestored = true;
       }
@@ -912,7 +914,7 @@ App.Router = Em.Router.extend({
 
   root: Em.Route.extend({
     index: Em.Route.extend({
-      route: '/',
+      route: '/classic',
       redirectsTo: 'login'
     }),
 
@@ -929,6 +931,7 @@ App.Router = Em.Router.extend({
        *  If the user is already logged in, redirect to where the user was previously
        */
       enter: function (router, context) {
+        console.log('Entering login route');
         if ($.mocho) {
           return;
         }
@@ -966,7 +969,7 @@ App.Router = Em.Router.extend({
     main: require('routes/main'),
 
     adminView: Em.Route.extend({
-      route: '/adminView',
+      route: '/classic/adminView',
       enter: function (router) {
         if (!router.get('loggedIn') || !App.isAuthorized('CLUSTER.UPGRADE_DOWNGRADE_STACK')) {
           Em.run.next(function () {
@@ -983,7 +986,7 @@ App.Router = Em.Router.extend({
     }),
 
     experimental: Em.Route.extend({
-      route: '/experimental',
+      route: '/classic/experimental',
       enter: function (router, context) {
         if (!App.isAuthorized('AMBARI.MANAGE_SETTINGS')) {
           if (App.isAuthorized('CLUSTER.UPGRADE_DOWNGRADE_STACK')) {
