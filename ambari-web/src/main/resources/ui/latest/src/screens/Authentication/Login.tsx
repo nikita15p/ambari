@@ -1,11 +1,11 @@
-import { LoginApi } from "../../api/LoginApi";
-import { useEffect } from "react";
+// import { LoginApi } from "../../api/LoginApi";
+// import { useEffect } from "react";
 
 export const Login = () => {
 
-  useEffect(() => {
-    LoginApi.login();
-  }, []);
+  // useEffect(() => {
+  //   LoginApi.login();
+  // }, []);
   
   return (
     <div>

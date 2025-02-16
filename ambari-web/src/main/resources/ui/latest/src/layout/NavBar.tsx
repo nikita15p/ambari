@@ -17,7 +17,7 @@
  */
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -25,33 +25,33 @@ import {
   Dropdown,
   DropdownDivider,
 } from "react-bootstrap";
-import {
-  decryptData,
-  getFromLocalStorage,
-  parseJSONData
-} from "../utils";
-import { get } from "lodash";
+// import {
+//   decryptData,
+//   getFromLocalStorage,
+//   parseJSONData
+// } from "../utils";
+// import { get } from "lodash";
 type NavBarProps = {
   subPath: string;
   clusterName: string;
 };
 export default function NavBar({ subPath, clusterName }: NavBarProps) {
-  const [loginUserName, setLoginUserName] = useState("");
-  const [ambariLsVal, setAmbariLsVal] = useState(null);
-  useEffect(() => {
-    let ambariKey = getFromLocalStorage('ambari');
-    if (ambariKey) {
-      setAmbariLsVal(parseJSONData(decryptData(ambariKey)));
-    }
-  }, []);
-  useEffect(() => {
-    if (ambariLsVal) {
-      const loginName = get(ambariLsVal, 'app.loginName');
-      if (loginName) {
-        setLoginUserName(loginName);
-      }
-    }
-  }, [ambariLsVal]);
+  // const [loginUserName, setLoginUserName] = useState("");
+  // const [ambariLsVal, setAmbariLsVal] = useState(null);
+  // useEffect(() => {
+  //   let ambariKey = getFromLocalStorage('ambari');
+  //   if (ambariKey) {
+  //     setAmbariLsVal(parseJSONData(decryptData(ambariKey)));
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   if (ambariLsVal) {
+  //     const loginName = get(ambariLsVal, 'app.loginName');
+  //     if (loginName) {
+  //       setLoginUserName(loginName);
+  //     }
+  //   }
+  // }, [ambariLsVal]);
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" className="bg-white">
@@ -79,7 +79,7 @@ export default function NavBar({ subPath, clusterName }: NavBarProps) {
                   icon={faUser}
                   className="me-1 navbar-text navbar-size"
                 />
-                <div className="navbar-text navbar-size">{loginUserName}</div>
+                {/* <div className="navbar-text navbar-size">{loginUserName}</div> */}
               </Dropdown.Toggle>
               <Dropdown.Menu className="rounded-0">
                 <Dropdown.Item

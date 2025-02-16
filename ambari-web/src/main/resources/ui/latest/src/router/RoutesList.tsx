@@ -1,12 +1,12 @@
-import { Login } from "../screens/Authentication/Login";
+// import { Login } from "../screens/Authentication/Login";
 
 export default [
 
-    {
-        path: "/login",
-        exact: true,
-        Element: () => <Login/>,
-    },
+    // {
+    //     path: "/login",
+    //     exact: true,
+    //     Element: () => <Login/>,
+    // },
     {
         path: "/",
         exact: true,

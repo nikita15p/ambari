@@ -25,11 +25,13 @@ module.exports = Em.Route.extend(App.RouterRedirections, {
     route: 'dashboard'
   },
 
-  route: '/main',
+  classicPrefix: '/classic',
+
+  route: '/classic/main',
   enter: function (router) {
     App.db.updateStorage();
     var self = this;
-    var location = router.location.location.hash;
+    var location = router.location.location.hash.replace('/classic', '');
     var clusterController = App.router.get('clusterController');
 
     router.getAuthenticated().done(function (loggedIn) {
