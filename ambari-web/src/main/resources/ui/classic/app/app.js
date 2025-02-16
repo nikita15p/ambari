@@ -28,32 +28,6 @@ require('utils/bootstrap_popups');
 var stringUtils = require('utils/string_utils');
 var stompClientClass = require('utils/stomp_client');
 
-
-require('initialize');
-
-var App = require('app');
-
-App.Router.reopen({
-  // Add support for classic prefix in URL
-  rootURL: '/classic/',
-  
-  location: 'hash',
-
-  init: function() {
-    this._super();
-    // Handle classic prefix in URLs
-    var router = this;
-    Em.Route.reopen({
-      redirect: function(params, transition) {
-        var path = transition.intent.url;
-        if (path && !path.startsWith('/classic')) {
-          router.replaceWith('/classic' + path);
-        }
-      }
-    });
-  }
-});
-
 module.exports = Em.Application.create({
   name: 'Ambari Web',
   rootElement: '#wrapper',

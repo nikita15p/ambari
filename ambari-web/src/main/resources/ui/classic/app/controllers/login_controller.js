@@ -18,7 +18,7 @@
 
 var App = require('app');
 
-App.LoginController = Em.Object.extend({
+App.LoginController = Em.Controller.extend({
 
   name: 'loginController',
 
@@ -28,6 +28,8 @@ App.LoginController = Em.Object.extend({
   errorMessage: '',
 
   isSubmitDisabled: false,
+
+  loginPath: '/login',
 
   submit: function (e) {
     this.set('errorMessage', '');
