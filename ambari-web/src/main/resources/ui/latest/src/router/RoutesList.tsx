@@ -8,7 +8,7 @@ export default [
     //     Element: () => <Login/>,
     // },
     {
-        path: "/",
+        path: "/latest",
         exact: true,
         Element: () => <h1>Ambari Web</h1>,
         name: "Home",

@@ -11,6 +11,8 @@
 /ambari-web/npm-debug.log
 /ambari-web/public/
 /ambari-web/node_modules/
+/ambari_web/src/main/resources/ui/classic/node_modules
+/ambari-web/src/main/resources/ui/latest/node_modules
 /ambari-web/node/
 *.pyc
 *.py~

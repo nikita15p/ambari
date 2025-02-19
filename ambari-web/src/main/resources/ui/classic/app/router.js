@@ -133,6 +133,9 @@ App.StepRoute = Em.Route.extend({
 
 App.Router = Em.Router.extend({
 
+  rootURL: '/classic',
+
+  location: 'hash',
   enableLogging: true,
   isFwdNavigation: true,
   backBtnForHigherStep: false,
