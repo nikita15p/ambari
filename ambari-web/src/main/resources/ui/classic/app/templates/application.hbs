@@ -1,0 +1,19 @@
+<div id="main">
+  <div id="top-nav">
+    {{#if App.router.loggedIn}}
+      <div class="navbar">
+        <div class="navbar-inner">
+          {{! existing navbar content }}
+          
+          {{! Add switch button }}
+          <div class="nav-switch-container">
+            <button {{action "switchToLatest"}} class="btn btn-switch">
+              Switch to Latest View
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  {{outlet}}
+</div> 
