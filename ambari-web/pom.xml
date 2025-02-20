@@ -88,12 +88,17 @@
                     </environmentVariables>
                 </configuration>
                 <executions>
+                    <!-- Classic UI (Ember.js) with older Node.js -->
                     <execution>
                         <id>install node and yarn</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>install-node-and-yarn</goal>
                         </goals>
+                        <configuration>
+                            <nodeVersion>v4.5.0</nodeVersion>
+                            <workingDirectory>${uidir}</workingDirectory>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>yarn install</id>
@@ -103,8 +108,10 @@
                         </goals>
                         <configuration>
                             <arguments>install --ignore-engines --pure-lockfile</arguments>
+                            <workingDirectory>${uidir}</workingDirectory>
                         </configuration>
                     </execution>
+                    <!-- Latest UI (React) with newer Node.js -->
                     <execution>
                         <id>install-node-and-npm-react</id>
                         <phase>generate-sources</phase>
@@ -215,7 +222,7 @@
                             <workingDirectory>${uidir}</workingDirectory>
                             <executable>${uidir}/node/${node.executable}</executable>
                             <arguments>
-                                <argument>node_modules/brunch/bin/brunch</argument>
+                                <argument>${uidir}/node_modules/brunch/bin/brunch</argument>
                                 <argument>build</argument>
                             </arguments>
                         </configuration>

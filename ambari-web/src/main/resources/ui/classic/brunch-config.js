@@ -16,10 +16,7 @@
  * limitations under the License.
  */
 
-exports.config = {
-  paths: {
-    "watched": ['app', 'test', 'vendor']  // Directories to watch
-  },
+module.exports.config = {
   plugins: {
     babel: {
       ignore: [
