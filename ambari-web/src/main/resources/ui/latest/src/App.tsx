@@ -1,21 +1,22 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Dashboard from './components/Dashboard'
-import './App.css'
+import Routes from "./router/Routes";
+import { HashRouter } from "react-router-dom";
+import NavBar from "./layout/NavBar";
 
 function App() {
+
   return (
-    <Router basename="/latest">
-      <div className="app">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+    <HashRouter>
+      <div className="App">
+        <h1>Welcome to Your React + TypeScript App!</h1>
+        <p>Edit <code>App.tsx</code> and save to reload.</p>
+        <NavBar
+              subPath={"SubPath"}
+              clusterName={""}
+            />
+        <Routes />
       </div>
-    </Router>
-  )
+    </HashRouter>
+  );
 }
 
-export default App 
+export default App;

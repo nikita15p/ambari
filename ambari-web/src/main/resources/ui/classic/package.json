@@ -41,6 +41,8 @@
     "sinon-chai": "~2.8.0"
   },
   "scripts": {
+    "build": "./node_modules/.bin/brunch build",
+    "postinstall": "node_modules/.bin/brunch build",
     "start": "brunch watch --server",
     "test": "karma start"
   },

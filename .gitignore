@@ -12,6 +12,8 @@
 /ambari-web/public/
 /ambari-web/node_modules/
 /ambari-web/node/
+/ambari-web/src/main/resources/ui/classic/node_modules/
+/ambari-web/src/main/resources/ui/latest/node_modules/
 *.pyc
 *.py~
 **/*.iml

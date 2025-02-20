@@ -85,6 +85,7 @@ App.WizardRoute = Em.Route.extend({
  */
 App.StepRoute = Em.Route.extend({
 
+
   /**
    * @type {Function}
    */
@@ -132,6 +133,8 @@ App.StepRoute = Em.Route.extend({
 });
 
 App.Router = Em.Router.extend({
+
+  rootURL: '/classic',
 
   enableLogging: true,
   isFwdNavigation: true,

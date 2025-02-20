@@ -16,11 +16,8 @@
  * limitations under the License.
  */
 
-exports.config = {
-  paths: {
-    "public": 'public',  // Output directory
-    "watched": ['app', 'test', 'vendor']  // Directories to watch
-  },
+
+module.exports.config = {
   plugins: {
     babel: {
       ignore: [
@@ -31,8 +28,8 @@ exports.config = {
     },
     assetsmanager: {
       copyTo: {
-        'stylesheets/fonts' : ['vendor/theme/fonts/*'],
-        'api-docs' : ['api-docs/*']
+        'classic/stylesheets/fonts' : ['vendor/theme/fonts/*'],
+        'classic/api-docs' : ['api-docs/*']
       }
     }
   },
@@ -139,7 +136,7 @@ exports.config = {
 
   server: {
     port: 3333,
-    base: '/',
+    base: '/classic',
     run: 'no'
   },
 

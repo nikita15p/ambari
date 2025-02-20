@@ -1,0 +1,15 @@
+
+export default [
+
+    // {
+    //     path: "/login",
+    //     exact: true,
+    //     Element: () => <Login/>,
+    // },
+    {
+        path: "/latest",
+        exact: true,
+        Element: () => <h1>Ambari Web</h1>,
+        name: "Home",
+    },
+]
